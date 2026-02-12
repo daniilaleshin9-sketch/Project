@@ -1,8 +1,12 @@
 import pytest
+from pages import base_page
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from Pages.login_page import LoginPage
 from Pages.main_page import MainPage
+from Data.Credentials import Credentials
+from base.base_page import BasePage
+import time
 
 
 @pytest.fixture(autouse=True)
@@ -16,3 +20,11 @@ def driver(request):
     yield driver
     driver.quit()
 
+@pytest.fixture()
+def auth_driver(driver):
+    login_page = LoginPage(driver)
+    login_page.open()
+    login_page.login(Credentials.LOGIN)
+    login_page.password(Credentials.PASSWORD)
+    time.sleep(0.5)
+    login_page.button_login()

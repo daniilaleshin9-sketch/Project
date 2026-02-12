@@ -1,6 +1,7 @@
 import random
 import string
 from faker import Faker
+from datetime import datetime
 
 fake = Faker()
 
@@ -26,3 +27,10 @@ class Generator:
         """Генерирует случайный номер телефона с указанным кодом"""
         return f"{country_code} {fake.msisdn()[-10:]}"
 
+    def get_current_date(self):
+        """Возвращает текущую дату в формате ДД.ММ.ГГГГ"""
+        return datetime.now().strftime("%d.%m.%Y")
+
+    def get_current_time(self):
+        """Возвращает текущее время в формате ЧЧ.ММ"""
+        return datetime.now().strftime("%H.%M")

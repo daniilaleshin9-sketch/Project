@@ -14,5 +14,3 @@ class TestLogin(BaseTest):
         self.login_page.login(Credentials.LOGIN)
         self.login_page.password(Credentials.PASSWORD)
         self.login_page.button_login()
-        time.sleep(2)
-        self.main_page.click_profile_button()
