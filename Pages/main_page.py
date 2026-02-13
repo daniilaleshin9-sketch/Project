@@ -20,6 +20,9 @@ class MainPage(BasePage):
     _edited_task = '//*[@class="Success_ok__y8HHg"][text() = "ОК"]'
     _open_task = '//li[1]/ul/div/h4'
     _view_title_task = '//h1[@class="Review_title__AHmpO"]'
+    _view_description_task = '//ul/div[1]//textarea'
+    _view_date_task = '//div[3]//div[1]/label[1]/input'
+    _view_time_task = '//div[3]//div[1]/label[2]/input'
     _submit_task_created = '//*[@class="Success_ok__y8HHg"]'
     _list_tasks = '//*[@class="mt-2.5"]'
     _task_title = '//*[@class="mt-2.5"]//h4[@class="TodoItem_content__J_7bo"]'
@@ -34,6 +37,9 @@ class MainPage(BasePage):
         self.generator = Generator()
         self.created_task_name = None
         self.edit_title_value = None
+        self.edit_description_value = None
+        self.current_date_edit = None
+        self.current_time_edit = None
 
     @allure.step("Нажимаем кнопку профиль")
     def click_profile_button(self):
@@ -71,7 +77,7 @@ class MainPage(BasePage):
         self.driver.find_element(*self._submit_button_task).click()
         self.wait_element_clickable(self._submit_task_created)
         self.driver.find_element(*self._submit_task_created).click()
-        time.sleep(0.5)
+        time.sleep(2)
         all_tasks = self.driver.find_elements(*self._task_title)
         tasks_text = [task.text for task in all_tasks]
         assert self.created_task_name in str(tasks_text), f"Задача '{self.created_task_name}' не найдена!"
@@ -84,50 +90,63 @@ class MainPage(BasePage):
         self.wait_element_clickable(self._opened_task)
         title_field = self.driver.find_element(*self._value_name)
         title_field.clear()
-        edit_title_value = self.generator.generate_string()
-        title_field.send_keys(edit_title_value)
-        self.edit_title_value = edit_title_value
+        self.edit_title_value = self.generator.generate_string()
+        title_field.send_keys(self.edit_title_value)
+        self.edit_title_value = self.edit_title_value
+
+    @allure.step("Редактируем описание")
+    def edit_description(self):
+        description_field = self.driver.find_element(*self._value_description)
+        description_field.clear()
+        edit_description_value = self.generator.generate_string()
+        description_field.send_keys(edit_description_value)
+        self.edit_description_value = edit_description_value
+
+    @allure.step("Редактируем дату задачи")
+    def edit_date_task(self):
+        current_date_edit = self.generator.get_current_date()
+        date_field_edit = self.wait_element_clickable(self._button_date_edit)
+        date_field_edit.send_keys(current_date_edit)
+        self.current_date_edit = current_date_edit
+
+    @allure.step("Редактируем время задачи")
+    def edit_time_task(self):
+        current_time_edit = self.generator.get_current_time()
+        time_field_edit = self.wait_element_clickable(self._button_time_edit)
+        time_field_edit.send_keys(current_time_edit)
+        self.current_time_edit = current_time_edit
         self.driver.find_element(*self._submit_button_edit_task).click()
         self.wait_element_clickable(self._edit_task)
         self.driver.find_element(*self._edit_task).click()
         self.wait_element_clickable(self._edited_task)
         self.driver.find_element(*self._edited_task).click()
 
-    # @allure.step("Редактируем описание")
-    # def edit_description(self):
-    #     self.wait_element_clickable(self._value_description)
-    #     self.driver.find_element(*self._value_description).click()
-    #     self.driver.find_element(*self._value_description).clear()
-    #     self.driver.find_element(*self._value_description).click()
-    #     edit_description_value = self.generator.generate_string()
-    #     self.driver.find_element(*self._value_description).send_keys(edit_description_value)
-    #     return edit_description_value
-    #
-    # @allure.step("Редактируем дату задачи")
-    # def edit_date_task(self):
-    #     current_date_edit = self.generator.get_current_date()
-    #     date_field_edit = self.wait_element_clickable(self._button_date_edit)
-    #     date_field_edit.send_keys(current_date_edit)
-    #     return current_date_edit
-    #
-    # @allure.step("Редактируем время задачи")
-    # def edit_time_task(self):
-    #     current_time_edit = self.generator.get_current_time()
-    #     time_field_edit = self.wait_element_clickable(self._button_time_edit)
-    #     time_field_edit.send_keys(current_time_edit)
-    #     time.sleep(5)
-    #     self.driver.find_element(*self._submit_button_edit_task).click()
-    #     self.wait_element_clickable(self._edit_task)
-    #     self.driver.find_element(*self._edit_task).click()
-    #     self.wait_element_clickable(self._edited_task)
-    #     self.driver.find_element(*self._edited_task).click()
-    #     return current_time_edit
-
-    @allure.step("Проверяем отредактировануую задачу")
-    def check_edit_task(self):
+    @allure.step("Проверяем отредактированный заголовок")
+    def check_edit_title(self):
         self.wait_page_loaded()
         self.wait_element_clickable(self._open_task)
         self.driver.find_element(*self._open_task).click()
+        self.wait_element_invisible(self._opened_task, timeout=5) # Добавили явное ожидание загрузки открытого модального окна что бы сравнивать корректно значение
         view_title_task = self.driver.find_element(*self._view_title_task).text
         assert self.edit_title_value == view_title_task, \
             f"Ожидали '{self.edit_title_value}', получили '{view_title_task}'"
+
+    @allure.step("Проверяем отредактированое описание")
+    def check_edit_description(self):
+        _view_description_task = self.driver.find_element(*self._view_description_task).get_attribute("placeholder")
+        assert self.edit_description_value == _view_description_task, \
+            f"Ожидали '{self.edit_description_value}', получили '{_view_description_task}'"
+
+    @allure.step("Проверяем отредактированную дату")
+    def check_edit_date(self):
+        _view_date_task = self.driver.find_element(*self._view_date_task).get_attribute("placeholder")
+        day, month, year = self.current_date_edit.split('.')
+        expected_format = f"{year}-{month}-{day}"
+        assert expected_format == _view_date_task, \
+            f"Ожидали '{expected_format}', получили '{_view_date_task}'"
+
+    @allure.step("Проверяем отредактированную дату")
+    def check_edit_time(self):
+        _view_time_task = self.driver.find_element(*self._view_time_task).get_attribute("placeholder")
+        assert self.current_time_edit == _view_time_task, \
+            f"Ожидали '{self.current_time_edit}', получили '{_view_time_task}'"

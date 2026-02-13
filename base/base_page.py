@@ -45,3 +45,8 @@ class BasePage(metaclass=MetaLocator):
         return WebDriverWait(self.driver, timeout).until(
             EC.text_to_be_present_in_element(locator, text)
         )
+
+    def wait_element_invisible(self, locator, timeout=5):
+        return WebDriverWait(self.driver, timeout).until(
+            EC.invisibility_of_element_located(locator)
+        )

@@ -17,9 +17,12 @@ class TestMain(BaseTest):
     @allure.step("Редактируем задачу")
     def test_edit_task(self, auth_driver):
         self.main_page.edit_task_title()
-        # self.main_page.edit_description()
-        # self.main_page.edit_date_task()
-        # self.main_page.edit_time_task()
-        self.main_page.check_edit_task()
+        self.main_page.edit_description()
+        self.main_page.edit_date_task()
+        self.main_page.edit_time_task()
+        self.main_page.check_edit_title()
+        self.main_page.check_edit_description()
+        self.main_page.check_edit_date()
+        self.main_page.check_edit_date()
 
 
