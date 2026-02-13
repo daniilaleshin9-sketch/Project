@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7e732ed-8523-4a4b-baaa-7ed79880aad0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Tests/test_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/login_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/login_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Pages/main_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/main_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/test_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/test_login.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/base_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/base/base_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utiles/generators.py" beforeDir="false" afterPath="$PROJECT_DIR$/utiles/generators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests/test_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/test_main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +57,7 @@
     "Python tests.Python tests for Tests.test_main.TestMain.executor": "Run",
     "Python tests.Python tests for Tests.test_main.TestMain.test_add_param_task.executor": "Run",
     "Python tests.Python tests for Tests.test_main.TestMain.test_add_task.executor": "Run",
+    "Python tests.Python tests for Tests.test_main.TestMain.test_edit_task.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -74,7 +70,7 @@
       <recent name="C:\Users\danii\PycharmProjects\PythonProject2\base" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for Tests.test_main.TestMain.test_add_param_task">
+  <component name="RunManager" selected="Python tests.Python tests for Tests.test_main.TestMain.test_edit_task">
     <configuration name="Python tests for Tests.test_login.TestLogin.test_login" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="PythonProject2" />
       <option name="ENV_FILES" value="" />
@@ -87,21 +83,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;Tests.test_login.TestLogin.test_login&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for Tests.test_main.MainTest" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="PythonProject2" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;Tests.test_main.MainTest&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -150,13 +131,28 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="Python tests for Tests.test_main.TestMain.test_edit_task" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="PythonProject2" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Tests.test_main.TestMain.test_edit_task&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests for Tests.test_main.TestMain.test_edit_task" />
         <item itemvalue="Python tests.Python tests for Tests.test_main.TestMain.test_add_param_task" />
         <item itemvalue="Python tests.Python tests for Tests.test_main.TestMain" />
         <item itemvalue="Python tests.Python tests for Tests.test_main.TestMain.test_add_task" />
         <item itemvalue="Python tests.Python tests for Tests.test_login.TestLogin.test_login" />
-        <item itemvalue="Python tests.Python tests for Tests.test_main.MainTest" />
       </list>
     </recent_temporary>
   </component>
