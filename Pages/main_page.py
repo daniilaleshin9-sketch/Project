@@ -1,6 +1,9 @@
+from selenium.webdriver.common.by import By
+
 from utiles.generators import Generator
 from datetime import datetime
 from base.base_page import BasePage
+from selenium.webdriver.remote.webelement import WebElement
 import time
 import allure
 generator = Generator()
@@ -30,6 +33,10 @@ class MainPage(BasePage):
     _opened_task = '//*[@class="EditTodo_wrapper___1B6a"]'
     _value_name = '//*[@id="edit-module"]//*[@placeholder="Заголовок"]'
     _value_description = '//*[@id="edit-module"]//*[@placeholder="Описание задачи"]'
+    _completed_task = '//li[1]/ul/div[1]//*[@class="TodoItem_checkmark__gytmH"]'
+    _completed_task_true = '//*[text() = "Завершить"]'
+    _completed_task_true_end = '//*[@class="Success_ok__y8HHg"]'
+    _completed_task_true_assert = '//li[1]/ul/div[1]/div[1]/div/span'
 
 
     def __init__(self, driver):
@@ -71,6 +78,7 @@ class MainPage(BasePage):
         current_time = self.generator.get_current_time()
         time_field = self.wait_element_clickable(self._button_time)
         time_field.send_keys(current_time)
+        time.sleep(5)
 
     @allure.step("Добавляем задачу")
     def click_submit_button_task(self):
@@ -98,9 +106,9 @@ class MainPage(BasePage):
     def edit_description(self):
         description_field = self.driver.find_element(*self._value_description)
         description_field.clear()
-        edit_description_value = self.generator.generate_string()
-        description_field.send_keys(edit_description_value)
-        self.edit_description_value = edit_description_value
+        self.edit_description_value = self.generator.generate_string()
+        description_field.send_keys(self.edit_description_value)
+        self.edit_description_value = self.edit_description_value
 
     @allure.step("Редактируем дату задачи")
     def edit_date_task(self):
@@ -123,19 +131,19 @@ class MainPage(BasePage):
 
     @allure.step("Проверяем отредактированный заголовок")
     def check_edit_title(self):
-        self.wait_page_loaded()
-        self.wait_element_clickable(self._open_task)
-        self.driver.find_element(*self._open_task).click()
-        self.wait_element_invisible(self._opened_task, timeout=5) # Добавили явное ожидание загрузки открытого модального окна что бы сравнивать корректно значение
-        view_title_task = self.driver.find_element(*self._view_title_task).text
-        assert self.edit_title_value == view_title_task, \
-            f"Ожидали '{self.edit_title_value}', получили '{view_title_task}'"
+        task_xpath = f'//*[text()="{self.edit_title_value}"]'
+        task_element = self.wait_element_clickable((By.XPATH, task_xpath), timeout=5)
+        task_element.click()
+        self.wait_element_visible(self._view_title_task)
+        view_title = self.driver.find_element(*self._view_title_task).text
+        assert self.edit_title_value == view_title
 
-    @allure.step("Проверяем отредактированое описание")
+    @allure.step("Проверяем отредактированный заголовок")
     def check_edit_description(self):
-        _view_description_task = self.driver.find_element(*self._view_description_task).get_attribute("placeholder")
-        assert self.edit_description_value == _view_description_task, \
-            f"Ожидали '{self.edit_description_value}', получили '{_view_description_task}'"
+        self.wait_element_visible(self._view_description_task)
+        view_description = self.driver.find_element(*self._view_description_task).get_attribute("placeholder")
+        assert self.edit_description_value == view_description, \
+            f"Ожидали '{self.edit_description_value}', получили '{view_description}'"
 
     @allure.step("Проверяем отредактированную дату")
     def check_edit_date(self):
@@ -150,3 +158,24 @@ class MainPage(BasePage):
         _view_time_task = self.driver.find_element(*self._view_time_task).get_attribute("placeholder")
         assert self.current_time_edit == _view_time_task, \
             f"Ожидали '{self.current_time_edit}', получили '{_view_time_task}'"
+
+    @allure.step("Выполняем задачу")
+    def complete_task(self):
+        self.wait_element_clickable(self._completed_task, 2)
+        time.sleep(1)
+        self.driver.find_element(*self._completed_task).click()
+        time.sleep(1)
+        self.wait_element_clickable(self._completed_task_true, 2)
+        time.sleep(1)
+        self.driver.find_element(*self._completed_task_true).click()
+        time.sleep(1)
+        self.wait_element_clickable(self._completed_task_true_end, 2)
+        time.sleep(1)
+        self.driver.find_element(*self._completed_task_true_end).click()
+        time.sleep(1)
+        native_checkbox = self.driver.find_element(*self._completed_task_true_assert)
+        # time.sleep(1)
+        # assert native_checkbox.is_selected() is True
+
+
+

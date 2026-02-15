@@ -25,4 +25,8 @@ class TestMain(BaseTest):
         self.main_page.check_edit_date()
         self.main_page.check_edit_date()
 
+    @allure.step("Выполняем задачу")
+    def test_complete_task(self, auth_driver):
+        self.main_page.complete_task()
+
 
